@@ -20,43 +20,35 @@
   }
 
   /* 2) MOBILE HAMBURGER TOGGLE */
-  var toggle = document.querySelector('.nav-toggle');
+  var hamburger = document.querySelector('.hamburger');
   var navLinks = document.querySelector('.nav-links');
-
-  function closeNav() {
-    if (!navLinks) return;
-    navLinks.classList.remove('open');
-    if (toggle) toggle.setAttribute('aria-expanded', 'false');
-  }
-
-  function openNav() {
-    if (!navLinks) return;
-    navLinks.classList.add('open');
-    if (toggle) toggle.setAttribute('aria-expanded', 'true');
-  }
-
-  if (toggle && navLinks) {
-    toggle.addEventListener('click', function (e) {
-      e.stopPropagation();
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', function () {
+      navLinks.classList.toggle('open');
+      hamburger.classList.toggle('active');
       var isOpen = navLinks.classList.contains('open');
-      if (isOpen) { closeNav(); } else { openNav(); }
+      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
-
-    // Close on outside click
     document.addEventListener('click', function (e) {
-      if (!navLinks.classList.contains('open')) return;
-      if (navLinks.contains(e.target) || toggle.contains(e.target)) return;
-      closeNav();
+      if (!e.target.closest('header')) {
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
     });
-
-    // Close on link click
-    navLinks.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', closeNav);
+    document.querySelectorAll('.nav-links a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
     });
-
-    // Close on Escape
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeNav();
+      if (e.key === 'Escape') {
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
     });
   }
 
