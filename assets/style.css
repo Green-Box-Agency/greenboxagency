@@ -153,6 +153,13 @@ p + p { margin-top: 1rem; }
   box-shadow: 0 0 0 2px #2d4a2d;
 }
 
+img.team-avatar {
+  object-fit: cover;
+  object-position: center top;
+  padding: 0;
+}
+
+
 .nav-links {
   display: flex;
   gap: 28px;
