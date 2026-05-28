@@ -22,33 +22,33 @@
   /* 2) MOBILE HAMBURGER TOGGLE */
   var hamburger = document.querySelector('.hamburger');
   var navLinks = document.querySelector('.nav-links');
+  function gbaOpenMenu() {
+    if (!hamburger || !navLinks) return;
+    navLinks.classList.add('open');
+    hamburger.classList.add('active');
+    hamburger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function gbaCloseMenu() {
+    if (!hamburger || !navLinks) return;
+    navLinks.classList.remove('open');
+    hamburger.classList.remove('active');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
   if (hamburger && navLinks) {
     hamburger.addEventListener('click', function () {
-      navLinks.classList.toggle('open');
-      hamburger.classList.toggle('active');
-      var isOpen = navLinks.classList.contains('open');
-      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      if (navLinks.classList.contains('open')) { gbaCloseMenu(); } else { gbaOpenMenu(); }
     });
     document.addEventListener('click', function (e) {
-      if (!e.target.closest('header')) {
-        navLinks.classList.remove('open');
-        hamburger.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
-      }
+      if (!navLinks.classList.contains('open')) return;
+      if (!e.target.closest('header')) { gbaCloseMenu(); }
     });
     document.querySelectorAll('.nav-links a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        navLinks.classList.remove('open');
-        hamburger.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
-      });
+      link.addEventListener('click', function () { gbaCloseMenu(); });
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
-        navLinks.classList.remove('open');
-        hamburger.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
-      }
+      if (e.key === 'Escape') { gbaCloseMenu(); }
     });
   }
 
